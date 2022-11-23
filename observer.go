@@ -5,12 +5,12 @@ type Observer[T any] struct {
 	obs  *observeIncr
 }
 
-func Observe[T any](parent Incr[T]) Observer[T] {
+func (i Incr[T]) Observe() Observer[T] {
 	obs := &observeIncr{
-		parent: parent.base,
+		parent: i.base,
 	}
-	base := newBase(parent.base.reactor, obs)
-	parent.base.subscribe(base)
+	base := newBase(i.base.reactor, obs)
+	i.base.subscribe(base)
 	return Observer[T]{
 		base: base,
 		obs:  obs,
