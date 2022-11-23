@@ -20,6 +20,10 @@ func (v Var[T]) Set(value T) {
 	v.v.set(v.base, value)
 }
 
+func (v Var[T]) Observe() Observer[T] {
+	return v.Incr().Observe()
+}
+
 func (v Var[T]) Incr() Incr[T] {
 	return Incr[T]{base: v.base}
 }
