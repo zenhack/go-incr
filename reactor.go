@@ -5,12 +5,12 @@ import "container/heap"
 type Reactor struct {
 	allocHeight uint64
 	dirty       incrHeap
-	constNil    Incr[any]
+	constEmpty  Incr[struct{}] // Used as a dummy value in Map()
 }
 
 func NewReactor() *Reactor {
 	r := &Reactor{}
-	r.constNil = Const[any](r, nil)
+	r.constEmpty = Const(r, struct{}{})
 	return r
 }
 

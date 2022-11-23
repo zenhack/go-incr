@@ -1,7 +1,7 @@
 package incr
 
 func Map[A, B any](a Incr[A], f func(a A) B) Incr[B] {
-	return Map2(a, a.base.reactor.constNil, func(a A, _ any) B {
+	return Map2(a, a.base.reactor.constEmpty, func(a A, _ struct{}) B {
 		return f(a)
 	})
 }
