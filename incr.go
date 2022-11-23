@@ -1,10 +1,7 @@
 package incr
 
-type incr interface {
-	get() any
-	recompute(*incrBase)
-	activate(*incrBase)
-	deactivate(*incrBase)
+type Incr[T any] struct {
+	base *incrBase
 }
 
 type incrBase struct {
@@ -15,6 +12,13 @@ type incrBase struct {
 	dirty                   bool
 	differentFn             func(any, any) bool
 	incr
+}
+
+type incr interface {
+	get() any
+	recompute(*incrBase)
+	activate(*incrBase)
+	deactivate(*incrBase)
 }
 
 func newBase(r *Reactor, incr incr) *incrBase {
@@ -81,14 +85,4 @@ func (b *incrBase) setDirty() {
 		b.scheduledHeight = b.height
 		b.reactor.addDirty(b)
 	}
-}
-
-type DiffFunc[T any] func(T, T) bool
-
-func ComparableDifferent[T comparable](x, y T) bool {
-	return x != y
-}
-
-type Incr[T any] struct {
-	base *incrBase
 }
